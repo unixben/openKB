@@ -132,7 +132,7 @@
 	"Delete": "Löschen",
 	"Reset views": "Ansichten zurücksetzen",
 	"Reset votes": "Bewertungen zurücksetzen",
-	"Featured article": "Gefeatureter Artikel",
+	"Featured article": "Vorgestellte Artikel",
 	"SEO title": "SEO-Titel",
 	"SEO description": "SEO-Beschreibung",
 	"Successfully saved": "Erfolgreich gespeichert",
@@ -153,6 +153,6 @@
 	"Author": "Autor",
 	"Keywords": "Keywords",
 	"Import": "Import",
-	"Select a language": "Select a language",
-	"The language to use for public facing pages. Leave blank for default (English)": "The language to use for public facing pages. Leave blank for default (English)"
+	"Select a language": "Sprache auswählen",
+	"The language to use for public facing pages. Leave blank for default (English)": "Die Sprache für öffentlich zugängliche Seiten. Leer lassen, um die Standardeinstellung (Englisch) zu verwenden"
 }
