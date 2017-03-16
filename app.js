@@ -28,7 +28,7 @@ var app = express();
 
 // setup the translation
 var i18n = new (require('i18n-2'))({
-    locales: ['en', 'de', 'da', 'es'],
+    locales: ['en', 'de', 'da', 'es', 'cn'],
     directory: path.join(__dirname, 'locales/'),
     defaultLocale: 'en',
     cookieName: 'locale'
@@ -59,7 +59,7 @@ if(config.settings.theme){
 
 // view engine setup
 app.set('views', path.join(__dirname, '/views'));
-app.engine('hbs', handlebars({extname: 'hbs', layoutsDir: path.join(__dirname, '/views/layouts'), defaultLayout: 'layout.hbs'}));
+app.engine('hbs', handlebars({extname: 'hbs', layoutsDir: path.join(__dirname, '/views/layouts'), defaultLayout: 'layout.hbs', partialsDir: 'public/themes/'}));
 app.set('view engine', 'hbs');
 
 // helpers for the handlebar templating platform
@@ -69,11 +69,15 @@ handlebars = handlebars.create({
             return i18n.__(value);
         },
         split_keywords: function (keywords){
+            var app_context = config.settings.app_context;
+            if(app_context !== ''){
+                app_context = '/' + app_context;
+            }
             if(keywords){
                 var array = keywords.split(','); var links = '';
                 for(var i = 0; i < array.length; i++){
                     if(array[i].trim() !== ''){
-                        links += "<a href='/search/" + array[i].trim() + "'>" + array[i].trim() + '</a>&nbsp;|&nbsp;';
+                        links += '<a href="' + app_context + '/search/' + array[i].trim() + '">' + array[i].trim() + '</a>&nbsp;|&nbsp;';
                     }
                 }return links.substring(0, links.length - 1);
             }

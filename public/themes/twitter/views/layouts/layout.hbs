@@ -3,11 +3,14 @@
 	<head>
         {{#if result.kb_seo_title}}
         <title>{{result.kb_seo_title}}</title>
+        <meta property="og:title" content="{{result.kb_seo_title}}" />
         {{else}}
         {{#if result.kb_title}}
         <title>{{result.kb_title}}</title>
+        <meta property="og:title" content="{{result.kb_title}}" />
         {{else}}
         <title>{{title}}</title>
+        <meta property="og:title" content="{{title}}" />
         {{/if}}
         {{/if}}
 	    <meta charset="utf-8">
@@ -15,11 +18,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         {{#if result.kb_seo_description}}
 		<meta name="description" content="{{result.kb_seo_description}}">
+        <meta property="og:description" content="{{result.kb_seo_description}}" />
         {{else}}
         {{#if result.kb_body}}
         <meta name="description" content="{{substring (strip_md result.kb_body) 160}}">
+        <meta property="og:description" content="{{substring (strip_md result.kb_body) 160}}" />
         {{else}}
-        <meta name="description" content="Powered by openKB">
+        {{#ifCond homepage '===' true}}
+        <meta name="description" content="{{config.settings.website_description}}">
+        <meta property="og:description" content="{{config.settings.website_description}}" />
+        {{else}}
+        <meta name="description" content="{{__ "Powered by"}} openKB">
+        <meta property="og:description" content="{{__ "Powered by"}} openKB" />
+        {{/ifCond}}
         {{/if}}
         {{/if}}
         {{#if result.kb_keywords}}
@@ -27,33 +38,48 @@
         {{else}}
         <meta name="keywords" content="openKB">
         {{/if}}
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="{{current_url}}/logo.png" />
+        <meta property="og:url" content="{{fullUrl}}" />
 		<link rel="stylesheet" href="{{app_context}}/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="{{app_context}}/simplemde/simplemde.min.css">
-        <link rel="stylesheet" href="/stylesheets/github.css">
-		<link rel="stylesheet" href="/themes/twitter/css/style.css">
+        <link rel="stylesheet" href="{{app_context}}/stylesheets/github.css">
+		<link rel="stylesheet" href="{{app_context}}/themes/twitter/css/style.css">
 		<link rel="stylesheet" href="{{app_context}}/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="/stylesheets/mermaid.css">
-		<link rel="stylesheet" href="/stylesheets/bootstrap-tokenfield.css">
-        <link rel="stylesheet" href="/stylesheets/jpushmenu.css">
+		<link rel="stylesheet" href="{{app_context}}/stylesheets/mermaid.css">
+		<link rel="stylesheet" href="{{app_context}}/stylesheets/bootstrap-tokenfield.css">
+        <link rel="stylesheet" href="{{app_context}}/stylesheets/jpushmenu.css">
+        <link rel='icon' href='{{app_context}}/favicon.png' />
 		<script src="{{app_context}}/jquery/jquery.min.js"></script>
+        <script>{{{state}}}</script>
 		<script src="{{app_context}}/bootstrap/js/bootstrap.min.js"></script>
-        <script src="/javascripts/bootstrap-validator.js"></script>
-		<script src="/javascripts/mermaid.min.js"></script>
-		<script src="/javascripts/markdown-it-classy.js"></script>
-		<script src="/javascripts/bootstrap-tokenfield.min.js"></script>
-        <script src="/javascripts/inline-attachment.js"></script>
-		<script src="/javascripts/codemirror.inline-attachment.js"></script>
-        <script src="/javascripts/highlight.min.js"></script>
+        <script src="{{app_context}}/javascripts/bootstrap-validator.js"></script>
+		<script src="{{app_context}}/javascripts/mermaid.min.js"></script>
+		<script src="{{app_context}}/javascripts/markdown-it-classy.js"></script>
+		<script src="{{app_context}}/javascripts/bootstrap-tokenfield.min.js"></script>
+        <script src="{{app_context}}/javascripts/inline-attachment.js"></script>
+		<script src="{{app_context}}/javascripts/codemirror.inline-attachment.js"></script>
+        <script src="{{app_context}}/javascripts/highlight.min.js"></script>
         <script src="{{app_context}}/simplemde/simplemde.min.js"></script>
 		<script src="{{app_context}}/markdown-it/markdown-it.min.js"></script>
-        <script src="/javascripts/jpushmenu.js"></script>
-		<script src="/javascripts/openKB.js"></script>
+        {{#ifCond config.settings.typeahead_search '===' true}}
+        <script src="{{app_context}}/lunr/lunr.min.js"></script>
+        {{/ifCond}}
+        <script src="{{app_context}}/javascripts/jpushmenu.js"></script>
+		<script src="{{app_context}}/javascripts/openKB.js"></script>
+        {{#ifCond user_page '===' true}}
+        {{#if config.settings.google_analytics}}
+        {{{config.settings.google_analytics}}}
+        {{/if}}
+        {{/ifCond}}
 	</head>
 	<body class="{{show_footer}}">	
 		<!-- Static navbar -->
 		<div class="container-fluid">
 			{{{body}}}
 		</div>
+        <input type="hidden" value="{{app_context}}" id="app_context">
+        <input type="hidden" value="{{config.settings.links_blank_page}}" id="blank_links">
 		<input type="hidden" id="input_notify_message" value="{{message}}">
 		<input type="hidden" id="input_notify_message_type" value="{{message_type}}">
 		<div id="notify_message"></div>
