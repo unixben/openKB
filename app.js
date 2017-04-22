@@ -28,7 +28,7 @@ var app = express();
 
 // setup the translation
 var i18n = new (require('i18n-2'))({
-    locales: ['en', 'de', 'da', 'es', 'cn'],
+    locales: ['en', 'de', 'da', 'es', 'cn', 'ru'],
     directory: path.join(__dirname, 'locales/'),
     defaultLocale: 'en',
     cookieName: 'locale'
@@ -52,7 +52,7 @@ common.config_expose(app);
 // check theme directory exists if set
 if(config.settings.theme){
     if(!fs.existsSync(path.join(__dirname, '/public/themes/', config.settings.theme))){
-        console.error('Theme folder does not exist. Please check theme in /routes/config.js');
+        console.error('Theme folder does not exist. Please check theme in /routes/config.json');
         process.exit();
     }
 }
@@ -176,7 +176,7 @@ handlebars = handlebars.create({
 
 app.enable('trust proxy');
 app.set('port', process.env.PORT || 4444);
-app.set('bind', process.env.BIND || '127.0.0.1');
+app.set('bind', process.env.BIND || '0.0.0.0');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -203,6 +203,7 @@ if(config.settings.app_context !== undefined && config.settings.app_context !== 
 
 // frontend modules loaded from NPM
 app.use(app_context + '/static', express.static(path.join(__dirname, 'public/')));
+app.use(app_context + '/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 app.use(app_context + '/font-awesome', express.static(path.join(__dirname, 'node_modules/font-awesome/')));
 app.use(app_context + '/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist/')));
 app.use(app_context + '/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/')));

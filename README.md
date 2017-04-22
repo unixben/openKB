@@ -30,7 +30,7 @@ platform.
 
 ### Features
 
-- **Search**: openKB is a search based Knowledgebase (FAQ) backed by [Lunr.js](https://github.com/olivernn/lunr.js/) indexing to create the best possible results on searches.
+- **Search**: openKB is a search based Knowledge base (FAQ) backed by [Lunr.js](https://github.com/olivernn/lunr.js/) indexing to create the best possible results on searches.
 - **Backend**: openKB uses the pure Javascript [nedb](https://github.com/louischatriot/nedb) embedded database by default or a MongoDB server.
 - **Design/Themes**: openKB is meant to be simple flat design. Themes can be added by creating a theme folder within `public/themes/`. See the example theme for more information.
 - **Responsive**: openKB is built using Bootstrap allowing it to be responsive and work on all devices. The `admin` can be a little difficult editing Markdown on smaller screens.
@@ -84,7 +84,7 @@ A new user form will be shown where a user can be created.
 
 ### Config
 
-Most of the configuration can be done on the `/settings` page but there are some addition values which require setting manually in the `/routes/config.js` file.
+Most of the configuration can be done on the `/settings` page but there are some addition values which require setting manually in the `/config/config.json` file.
 
 |Setting|Description|
 |--- |--- |
@@ -105,7 +105,8 @@ Most of the configuration can be done on the `/settings` page but there are some
 |`show_kb_meta`|Whether to show article meta data including published date, last updated date, author etc|
 |`suggest_allowed`|If enabled non authenticated users can submit article suggestions for approval|
 |`show_author_email`|Controls whether the authors email address is displayed in the meta. Requires "Show article meta data" to be true.|
-|`enable_mermaid_charts`|Whether to allow Mermaid charts within articles|
+|`mermaid`|Whether to allow Mermaid charts within articles|
+|`mathjax`|Whether to allow MathJax inputs within articles|
 |`app_context`|Allows for the website to be run from a non root path. Eg: http://127.0.0.1:4444/openkb/|
 |`links_blank_page`|Controls whether links within articles open a new page (tab)|
 |`add_header_anchors`|Whether to add HTML anchors to all heading tags for linking within articles or direct linking from other articles|
@@ -119,7 +120,7 @@ Most of the configuration can be done on the `/settings` page but there are some
 **Data sorting**
 You can control the sort order or articles. You can sort on anything but popular fields are `kb_viewcount`,  `kb_published_date`,  `kb_last_updated` or `kb_votes`
 
-Setting the `sort_by` field in the `config.js` like so:
+Setting the `sort_by` field in the `config.json` like so:
 
 ``` javascript
 {field: 'kb_viewcount', order: -1};
@@ -137,7 +138,7 @@ Valid `order` values are: `-1` or `1`
 By default, `openKB` uses an embedded Javascript database called [nedb](https://github.com/louischatriot/nedb) for easy installation. This works really well for small to medium sized applications but
 has it's limitations if you wanted to scale your application to handle many articles and concurrent users. For this reason, `openKB` also supports using a MongoDB server by simply changing the config file.
 
-Here is the `config.js` for the embedded database (NeDB):
+Here is the `config.json` for the embedded database (NeDB):
 
 ``` javascript
 "database": {
@@ -145,7 +146,7 @@ Here is the `config.js` for the embedded database (NeDB):
 }
 ```
 
-Here is an example `config.js` for a MongoDB server. You can use your own localhost MongoDB instance or you may choose a hosted MongoDB server like [mLab](https://mlab.com/).
+Here is an example `config.json` for a MongoDB server. You can use your own localhost MongoDB instance or you may choose a hosted MongoDB server like [mLab](https://mlab.com/).
 
 ``` javascript
 "database": {
@@ -222,7 +223,15 @@ As a general rule there is about 3KB of compressed data being transferred from s
 hundreds of articles, the amount of data will increase and could cause performance issues. It is something to consider if your app seems to slow down once the
 article numbers increase. If this is the case, you can simply just turn it off.
 
+### Contributing
+
+Have design skills? Want to design theme(s) for `openKB`? Please design and submit PR.
+
+### openKB examples
+
+Have openKB running on a public facing server? Submit a PR with your URL and it will be updated here.
+
 ### Running in production
 
 Using [PM2](https://github.com/Unitech/pm2) seems to be the easiest and best option for running production websites.
-See the [PM2](https://github.com/Unitech/pm2) for more information or a short guide here: [http://mrvautin.com/Running-Nodejs-applications-in-production-forever-vs-supervisord-vs-pm2](http://mrvautin.com/Running-Nodejs-applications-in-production-forever-vs-supervisord-vs-pm2).
+See the [PM2](https://github.com/Unitech/pm2) for more information or a short guide here: [https://mrvautin.com/Running-Nodejs-applications-in-production-forever-vs-supervisord-vs-pm2](https://mrvautin.com/Running-Nodejs-applications-in-production-forever-vs-supervisord-vs-pm2).
